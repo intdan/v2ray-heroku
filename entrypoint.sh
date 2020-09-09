@@ -31,15 +31,15 @@ date -R
 
 
 if [ "$VER" = "latest" ]; then
-  V_VER=`wget -qO- "https://api.github.com/repos/v2ray/v2ray-core/releases/latest" | sed -n -r -e 's/.*"tag_name".+?"([vV0-9\.]+?)".*/\1/p'`
-  [[ -z "${V_VER}" ]] && V_VER="v4.23.1"
+  V_VER=`wget -qO- "https://api.github.com/repos/v2fly/v2ray-core/releases/latest" | sed -n -r -e 's/.*"tag_name".+?"([vV0-9\.]+?)".*/\1/p'`
+  [[ -z "${V_VER}" ]] && V_VER="v4.27.5"
 else
   V_VER="v$VER"
 fi
 
 mkdir /v2raybin
 cd /v2raybin
-V2RAY_URL="https://github.com/v2ray/v2ray-core/releases/download/$V_VER/v2ray-linux-64.zip"
+V2RAY_URL="https://github.com/v2fly/v2ray-core/releases/download/$V_VER/v2ray-linux-64.zip"
 echo ${V2RAY_URL}
 wget --no-check-certificate -qO 'v2ray.zip' ${V2RAY_URL}
 unzip v2ray.zip
@@ -67,7 +67,7 @@ cat <<-EOF > /v2raybin/config.json
     "inbound":{
         "protocol":"vmess",
         "listen":"127.0.0.1",
-        "port":2333,
+        "port":3666,
         "settings":{
             "clients":[
                 {
@@ -101,7 +101,7 @@ http://0.0.0.0:${PORT}
 	root /wwwroot
 	index index.html
 	timeouts none
-	proxy ${V2_Path} localhost:2333 {
+	proxy ${V2_Path} localhost:3666 {
 		websocket
 		header_upstream -Origin
 	}
